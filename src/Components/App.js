@@ -24,15 +24,17 @@ class App extends Component {
     window.scrollTo(0, 0)
   }
 
-  handleSearch (e){
+  handleSearch = (e) => {
+    console.log(e.target.value)
     this.setState({ searchTerm: e.target.value.toLowerCase() })
   }
 
   handleFilter = (e) => {
-    e.target.value === "No Filter" ? this.setState({ filterRating:"" }) : this.setState({ filterRating: e.target.value})
+    e.target.value === "No Filter" ? this.setState({ filterbyRating:"" }) : this.setState({ filterByRating: e.target.value})
   }
 
   selectShow = (show) => {
+    console.log(show)
     Adapter.getShowEpisodes(show.id)
     .then((episodes) => this.setState({
       selectedShow: show,
@@ -41,10 +43,15 @@ class App extends Component {
   }
 
   displayShows = () => {
+    console.log(this.state.shows)
     if (this.state.filterByRating){
       return this.state.shows.filter((s)=> {
         return s.rating.average >= this.state.filterByRating
       })
+    // } else if (this.state.searchTerm) {
+    //     return this.state.shows.filter(s => {
+    //       return s.name.toLowerCase().includes(this.state.searchTerm)
+    //     })
     } else {
       return this.state.shows
     }
